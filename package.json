@@ -1,0 +1,30 @@
+{
+  "name": "elias-portfolio",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "remotion:preview": "remotion preview src/remotion/Root.jsx",
+    "remotion:render": "remotion render src/remotion/Root.jsx CinematicHero out/video.mp4"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.446",
+    "@remotion/player": "^4.0.446",
+    "gsap": "^3.12.5",
+    "lucide-react": "^0.412.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.14.0",
+    "remotion": "^4.0.446"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.40",
+    "tailwindcss": "3.4.17",
+    "vite": "^5.3.4"
+  }
+}
