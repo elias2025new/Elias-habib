@@ -13,23 +13,28 @@ export default function Hero() {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-      tl.from('.hero-bg-text', { y: 100, opacity: 0, duration: 1.5, stagger: 0.2 })
-        .from('.hero-image', { scale: 1.1, opacity: 0, duration: 1.2, ease: 'power2.out' }, '-=1.0')
-        .from('.hero-fg-text', { y: 30, opacity: 0, duration: 1, stagger: 0.1 }, '-=0.5')
-        .from('.hero-description', { y: 20, opacity: 0, duration: 1 }, '-=0.8')
-        .fromTo('.hero-player-container', 
-          { opacity: 0 }, 
+      // Core choreography:
+      // 1. Cinematic Background Text
+      tl.fromTo('.hero-bg-char', 
+          { y: 100, opacity: 0, scale: 1.5, rotationX: 45, filter: 'blur(10px)' },
+          { y: 0, opacity: 1, scale: 1, rotationX: 0, filter: 'blur(0px)', duration: 2, stagger: 0.05, ease: 'expo.out' }
+        )
+      // 2. Simple, Unified Foreground Fade-up (Everything else drifts in softly)
+        .fromTo(['.hero-image', '.hero-fg-text', '.hero-description', '.hero-player-container'], 
+          { y: 40, opacity: 0 },
           { 
+            y: 0, 
             opacity: 1, 
-            duration: 1, 
+            duration: 1.2, 
+            stagger: 0.1, 
             ease: 'power2.out',
-            onComplete: () => {
+            onStart: () => {
               if (playerRef.current) {
                 playerRef.current.play();
               }
             }
           }, 
-          '+=0.2'
+          '-=1.2' // Overlap smoothly with the background completion
         );
 
     }, containerRef);
@@ -42,13 +47,14 @@ export default function Hero() {
       {/* Heavy gradient overlay at the bottom matching 'Midnight Luxe' */}
       <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/40 to-transparent z-10 pointer-events-none" />
 
-      {/* Massive Background Text */}
-      <div className="absolute inset-0 flex flex-col justify-center items-center opacity-30 select-none z-0 overflow-hidden mix-blend-overlay">
-        <h1 className="hero-bg-text text-[clamp(4rem,15vw,12rem)] leading-none font-sans font-bold text-champagne uppercase -tracking-[0.05em] whitespace-nowrap">
-          FULLSTACK
-        </h1>
-        <h1 className="hero-bg-text text-[clamp(4rem,15vw,12rem)] leading-none font-drama italic text-champagne uppercase opacity-70 ml-10 md:ml-20 whitespace-nowrap">
-          ENGINEER
+      {/* Massive Background Text / Branding */}
+      <div className="absolute inset-0 flex justify-center items-center opacity-10 select-none z-0 overflow-hidden" style={{ perspective: '1000px' }}>
+        <h1 className="flex text-[18vw] xl:text-[20vw] font-drama whitespace-nowrap leading-none text-ivory">
+          {'Elias Habib'.split('').map((char, i) => (
+            <span key={i} className="hero-bg-char inline-block" style={{ transformOrigin: 'center bottom' }}>
+              {char === ' ' ? '\u00A0' : char}
+            </span>
+          ))}
         </h1>
       </div>
 

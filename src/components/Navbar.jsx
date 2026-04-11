@@ -93,9 +93,15 @@ export default function Navbar() {
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8 text-sm font-sans font-medium text-ivory/70">
           {navItems.map((item) => (
-            <a key={item} href={`/#${item.toLowerCase()}`} className="hover:text-champagne transition-colors duration-300 hover:-translate-y-px inline-block">
-              {item}
-            </a>
+            item === 'Work' ? (
+              <Link key={item} to="/work" className="hover:text-champagne transition-colors duration-300 hover:-translate-y-px inline-block">
+                {item}
+              </Link>
+            ) : (
+              <Link key={item} to={`/#${item.toLowerCase()}`} className="hover:text-champagne transition-colors duration-300 hover:-translate-y-px inline-block">
+                {item}
+              </Link>
+            )
           ))}
         </div>
 
@@ -139,14 +145,25 @@ export default function Navbar() {
         
         <div className="flex flex-col items-center gap-8 mt-20">
           {navItems.map((item) => (
-            <a 
-              key={item} 
-              href={`/#${item.toLowerCase()}`} 
-              onClick={() => setIsOpen(false)}
-              className="mobile-nav-item text-4xl font-sans font-black tracking-tight text-ivory hover:text-champagne transition-colors"
-            >
-              {item}
-            </a>
+            item === 'Work' ? (
+              <Link
+                key={item}
+                to="/work"
+                onClick={() => setIsOpen(false)}
+                className="mobile-nav-item text-4xl font-sans font-black tracking-tight text-ivory hover:text-champagne transition-colors"
+              >
+                {item}
+              </Link>
+            ) : (
+              <Link 
+                key={item} 
+                to={`/#${item.toLowerCase()}`} 
+                onClick={() => setIsOpen(false)}
+                className="mobile-nav-item text-4xl font-sans font-black tracking-tight text-ivory hover:text-champagne transition-colors"
+              >
+                {item}
+              </Link>
+            )
           ))}
           <div className="w-12 h-px bg-ivory/20 my-4 mobile-nav-item" />
           <Link
